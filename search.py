@@ -48,6 +48,8 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
             
             for link in parsed_html.find_all('a'):
                 url= link.get('href') #parse here
+                if str(url).find('/',0,1) != -1:
+                	url="http://yelp.com"+url
                 outlinks.append(url)
                 print url
             

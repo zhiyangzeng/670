@@ -78,8 +78,8 @@ def main():
     location='Houston, TX'
     term=search.replace(' ', '+')
     place=location.replace(',','%2C').replace(' ','+')
-    seed_query=base_url+'/search?find_desc='+term+'&find_loc='+place+'&ns=1#start=0'
-    #print seed_query
+    #seed_query=base_url+'/search?find_desc='+term+'&find_loc='+place+'&ns=1#start=0'
+    seed_query='http://www.yelp.com/biz/korean-noodle-house-houston?osq=noodles'
     #index, graph = crawl_web(seed_query,MAX_PAGES,MAX_DEPTH)
     crawl_web(seed_query,MAX_PAGES,MAX_DEPTH)
     #ranks = compute_ranks(graph)

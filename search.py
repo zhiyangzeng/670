@@ -54,10 +54,16 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
                             url="http://yelp.com"+url                        
                         outlinks.append(url)
                     print url
+
             for nextBizPage in parsed_html.find_all('link', rel="next"):
                 outlinks.append(url) 
                 print url
             print parsed_html.find_all('review-content')
+
+            
+            for review in parsed_html.find_all('p', itemprop="description"):
+                print review            
+
                  
             
             #add_page_to_index(index, page, content)
@@ -81,7 +87,11 @@ def main():
     term=search.replace(' ', '+')
     place=location.replace(',','%2C').replace(' ','+')
     seed_query=base_url+'/search?find_desc='+term+'&find_loc='+place+'&ns=1#start=0'
+<<<<<<< HEAD
     print seed_query
+=======
+    #seed_query='http://www.yelp.com/biz/korean-noodle-house-houston?osq=noodles'
+>>>>>>> 9ec7130a2ff21b4edd613129cbfe4ec2607d779a
     #index, graph = crawl_web(seed_query,MAX_PAGES,MAX_DEPTH)
     crawl_web(seed_query,MAX_PAGES,MAX_DEPTH)
     #ranks = compute_ranks(graph)

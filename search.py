@@ -48,12 +48,11 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
             
             for link in parsed_html.find_all('a'):
                 url= link.get('href') #parse here
-                outlinks.append(url)
-                print url
-            
-            # extract all reviews which are nested within html tag "<p itemprop="description"> </p>" using beautifulsoup4 library. 
-            for review in parsed_html.find_all('p', itemprop="description"):
-                print review
+                if url != None :
+                    if url.find('/',0,1) != -1:
+                	    url="http://yelp.com"+url
+                    outlinks.append(url)
+                    print url
             
             print parsed_html.find_all('review-content')
                  

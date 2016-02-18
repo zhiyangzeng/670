@@ -1,7 +1,7 @@
 
 
-MAX_PAGES=20
-MAX_DEPTH=6
+MAX_PAGES=30
+MAX_DEPTH=10
 
 from bs4 import BeautifulSoup
 import time
@@ -49,11 +49,14 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
             for link in parsed_html.find_all('a'):
                 url= link.get('href') #parse here
                 if url != None :
-                    if url.find('/',0,1) != -1:
-                	    url="http://yelp.com"+url
-                    outlinks.append(url)
+                    if url.find('/biz/',0,len(url))!= -1:
+                        if url.find('/',0,1) != -1:
+                            url="http://yelp.com"+url                        
+                        outlinks.append(url)
                     print url
-            
+            for nextBizPage in parsed_html.find_all('link', rel="next"):
+                outlinks.append(url) 
+                print url
             print parsed_html.find_all('review-content')
                  
             
@@ -78,7 +81,7 @@ def main():
     term=search.replace(' ', '+')
     place=location.replace(',','%2C').replace(' ','+')
     seed_query=base_url+'/search?find_desc='+term+'&find_loc='+place+'&ns=1#start=0'
-    #print seed_query
+    print seed_query
     #index, graph = crawl_web(seed_query,MAX_PAGES,MAX_DEPTH)
     crawl_web(seed_query,MAX_PAGES,MAX_DEPTH)
     #ranks = compute_ranks(graph)

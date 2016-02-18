@@ -53,6 +53,10 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
                 outlinks.append(url)
                 print url
             
+            # extract all reviews which are nested within html tag "<p itemprop="description"> </p>" using beautifulsoup4 library. 
+            for review in parsed_html.find_all('p', itemprop="description"):
+                print review
+            
             print parsed_html.find_all('review-content')
                  
             

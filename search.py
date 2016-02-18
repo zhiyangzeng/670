@@ -54,7 +54,8 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
                     outlinks.append(url)
                     print url
             
-            print parsed_html.find_all('review-content')
+            for review in parsed_html.find_all('p', itemprop="description"):
+                print review            
                  
             
             #add_page_to_index(index, page, content)

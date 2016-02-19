@@ -1,8 +1,8 @@
 
 
-MAX_PAGES=30
-MAX_DEPTH=15
-max_output=30
+MAX_PAGES=500
+MAX_DEPTH=30
+max_output=500
 review_num=1
 
 
@@ -28,7 +28,7 @@ def union(a, b):
         if e not in a:
             a.append(e)
 
-def process_html(outlinks, content):
+def process_html(outlinks, content,proceed):
     global max_output  #100k
     global review_num
     parsed_html=BeautifulSoup(content,"html.parser")
@@ -53,12 +53,14 @@ def process_html(outlinks, content):
         if review_num<max_output:
 
             print "printing review number "+str(review_num)
-            f = open("/Users/zhiyangzeng/Desktop/670/review#%i.txt" %review_num,'w')
+            f = open("Reviews/review#%i.txt" %review_num,'w')
             f.write(str(review))
             f.close()
             review_num+=1
+        else:
+            proceed=False
             
-    return outlinks
+    return proceed, outlinks
      
 
 def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
@@ -69,8 +71,9 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
     #index = {}  # keyword: [url]
     nextdepth=[]
     depth=0
+    proceed=True
    
-    while tocrawl and depth<=maxdepth: 
+    while tocrawl and depth<=maxdepth and proceed:
         
         if len(crawled)>=maxpage: #limit number of pages
             break
@@ -80,7 +83,7 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
             outlinks= []
             content = get_page(page)
             
-            outlinks=process_html(outlinks,content)    
+            proceed,outlinks=process_html(outlinks,content,proceed)    
             
             
             #add_page_to_index(index, page, content)

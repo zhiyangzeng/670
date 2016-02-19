@@ -38,8 +38,9 @@ def process_html(outlinks, content):
         if url != None :
             if '/biz/' in url:
                 if url.find('/',0,1) != -1:
-                    url="http://yelp.com"+url                                              
-                outlinks.append(url)
+                    url="http://www.yelp.com"+url
+                if url.find('//www.',0,len(url)) != -1 and url.find('.com/',0,len(url)) !=-1 :                                            
+                    outlinks.append(url)
                 #print url
     for nextBizPage in parsed_html.find_all('link', rel="next"): #parse nextpg here and stores
         print nextBizPage
@@ -50,6 +51,7 @@ def process_html(outlinks, content):
         #print review
         #print type(review)
         if review_num<max_output:
+
             print "printing review number "+str(review_num)
             f = open("/Users/zhiyangzeng/Desktop/670/review#%i.txt" %review_num,'w')
             f.write(str(review))

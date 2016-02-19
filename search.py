@@ -1,7 +1,9 @@
 
 
-MAX_PAGES=20
-MAX_DEPTH=10
+MAX_PAGES=30
+MAX_DEPTH=15
+max_output=30
+review_num=1
 
 
 from bs4 import BeautifulSoup
@@ -27,8 +29,8 @@ def union(a, b):
             a.append(e)
 
 def process_html(outlinks, content):
-    max_output=20;  #100k
-    review_num=1;
+    global max_output  #100k
+    global review_num
     parsed_html=BeautifulSoup(content,"html.parser")
     
     for link in parsed_html.find_all('a'):
@@ -48,6 +50,7 @@ def process_html(outlinks, content):
         #print review
         #print type(review)
         if review_num<max_output:
+            print "printing review number "+str(review_num)
             f = open("/Users/zhiyangzeng/Desktop/670/review#%i.txt" %review_num,'w')
             f.write(str(review))
             f.close()
@@ -57,6 +60,7 @@ def process_html(outlinks, content):
      
 
 def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
+
     tocrawl = [seed]
     crawled = []
     #graph = {}  # <url>: [list of pages it links to]

@@ -2,7 +2,7 @@
 
 MAX_PAGES=5
 MAX_DEPTH=5
-max_output=3
+max_output=10
 review_num=1
 
 
@@ -56,11 +56,19 @@ def process_html(outlinks, content,proceed):
             if '/biz/' in url:
                 if url.find('/',0,1) != -1:
                     url="http://www.yelp.com"+url
-                if url.find('//www.',0,len(url)) != -1 and url.find('.com/',0,len(url)) !=-1 :                                            
+               
+                if url.find('//www.',0,len(url)) != -1 and url.find('.com/',0,len(url)) !=-1 :
+                    index=url.find('?hrid')
+                    if index!=-1:
+                        print 'url before'+str(url)
+                        url=url[:index]
+                        print 'url after'+str(url)                                            
                     outlinks.append(url)
+            
+          
                 #print url
     for nextBizPage in parsed_html.find_all('link', rel="next"): #parse nextpg here and stores
-        print nextBizPage
+        #print nextBizPage
         url= nextBizPage.get('href')
         outlinks.append(url) 
         
@@ -72,9 +80,7 @@ def process_html(outlinks, content,proceed):
         
         
         reviewID=reviewsection.find("div", { "class" : "rateReview voting-feedback" })
-        #print rating
-        print date
-        #print "price: "+str(pricerange)
+        #print date
         reviewID_str=parse_to_substr('data-review-id="','"',str(reviewID))
         date_str=parse_to_substr('"datePublished">\n','\n',str(date))
         rating_str=parse_to_substr('<meta content="','"',str(rating))
@@ -105,6 +111,7 @@ def process_html(outlinks, content,proceed):
             review_num+=1
         else:
             proceed=False
+            break
             
     return proceed, outlinks
  
@@ -150,7 +157,7 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
 def main():
     
     base_url='http://www.yelp.com'
-    search = 'bbq'
+    search = 'noodles'
     location='Houston, TX'
     term=search.replace(' ', '+')
     place=location.replace(',','%2C').replace(' ','+')

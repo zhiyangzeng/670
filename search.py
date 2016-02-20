@@ -1,7 +1,9 @@
 
 
-MAX_PAGES=20
-MAX_DEPTH=10
+MAX_PAGES=500
+MAX_DEPTH=30
+max_output=500
+review_num=1
 
 
 from bs4 import BeautifulSoup
@@ -28,9 +30,9 @@ def union(a, b):
         if e not in a:
             a.append(e)
 
-def process_html(outlinks, content):
-    max_output=20;  #100k
-    review_num=1;
+def process_html(outlinks, content,proceed):
+    global max_output  #100k
+    global review_num
     parsed_html=BeautifulSoup(content,"html.parser")
     
     for link in parsed_html.find_all('a'):
@@ -38,8 +40,9 @@ def process_html(outlinks, content):
         if url != None :
             if '/biz/' in url:
                 if url.find('/',0,1) != -1:
-                    url="http://yelp.com"+url                                              
-                outlinks.append(url)
+                    url="http://www.yelp.com"+url
+                if url.find('//www.',0,len(url)) != -1 and url.find('.com/',0,len(url)) !=-1 :                                            
+                    outlinks.append(url)
                 #print url
     for nextBizPage in parsed_html.find_all('link', rel="next"): #parse nextpg here and stores
         print nextBizPage
@@ -54,26 +57,31 @@ def process_html(outlinks, content):
         #print review
         #print type(review)
         if review_num<max_output:
-            f = open("/Users/muqingzhou/Documents/CSCE670/dataset/review#%i.txt" %review_num,'w')
-            f.write(reviewStr)
+            print "printing review number "+str(review_num)
+            f = open("Reviews/review#%i.txt" %review_num,'w')
+            f.write(str(review))
             f.close()
             review_num+=1
+        else:
+            proceed=False
             
-    return outlinks
+return proceed, outlinks
 
 # http://stackoverflow.com/questions/9662346/python-code-to-remove-html-tags-from-a-string
 def remove_tags(text):
     return TAG_RE.sub('', text)  
 
 def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
+
     tocrawl = [seed]
     crawled = []
     #graph = {}  # <url>: [list of pages it links to]
     #index = {}  # keyword: [url]
     nextdepth=[]
     depth=0
+    proceed=True
    
-    while tocrawl and depth<=maxdepth: 
+    while tocrawl and depth<=maxdepth and proceed:
         
         if len(crawled)>=maxpage: #limit number of pages
             break
@@ -83,7 +91,7 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
             outlinks= []
             content = get_page(page)
             
-            outlinks=process_html(outlinks,content)    
+            proceed,outlinks=process_html(outlinks,content,proceed)    
             
             
             #add_page_to_index(index, page, content)

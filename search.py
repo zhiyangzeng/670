@@ -1,8 +1,8 @@
 
 
-MAX_PAGES=5
-MAX_DEPTH=5
-max_output=10
+MAX_PAGES=100
+MAX_DEPTH=50
+max_output=100
 review_num=1
 
 
@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup, Tag
 #import time
 import re
 TAG_RE = re.compile(r'<[^>]+>')
+tab_re=re.compile(r'[ \t]')
 
 '''
 >>>>>>> expr
@@ -38,7 +39,7 @@ def parse_to_substr (needle, endneedle, haystack):
     end_index=haystack.find(endneedle,start_index+1)
     return haystack[start_index:end_index]
 
-def process_html(outlinks, content,proceed):
+def process_html(outlinks, reviewlist,content,proceed):
     global max_output  #100k
     global review_num
     parsed_html=BeautifulSoup(content,"html.parser")
@@ -66,6 +67,7 @@ def process_html(outlinks, content,proceed):
                         url=url[:index+1]
                     outlinks.append(url)
                 #print url
+                
     for nextBizPage in parsed_html.find_all('link', rel="next"): #parse nextpg here and stores
         #print nextBizPage
         url= nextBizPage.get('href')
@@ -75,58 +77,67 @@ def process_html(outlinks, content,proceed):
         outlinks.append(url) 
     
     for reviewsection in parsed_html.find_all('div', itemprop="review"):
-        review = reviewsection.find('p', itemprop='description')#finds reviews
-
-        # use regex to remove tags
-        reviewStr = remove_tags(str(review))
-
-        date=reviewsection.find('meta', itemprop='datePublished')
-        rating=reviewsection.find('meta',itemprop='ratingValue')
-        
-        
         reviewID=reviewsection.find("div", { "class" : "rateReview voting-feedback" })
-        #print date
         reviewID_str=parse_to_substr('data-review-id="','"',str(reviewID))
-        date_str=parse_to_substr('"datePublished">\n','\n',str(date))
-        rating_str=parse_to_substr('<meta content="','"',str(rating))
-        price_str=parse_to_substr('<span class="business-attribute price-range">','<',str(price))
-        #resname_str=parse_to_substr('<h1 class="biz-page-title embossed-text-white" itemprop="name">\n','\n',res_name)
+        # use regex to remove tags
+        if reviewID_str not in reviewlist:  #avoid duplication
+            reviewlist.append(reviewID_str)
+            review = reviewsection.find('p', itemprop='description')#finds reviews
+            reviewStr = remove_tags(str(review))
         
-            #print review
-            #print type(review)
-        if review_num<max_output:
-            #print "printing review number "+str(review_num)
+            date=reviewsection.find('meta', itemprop='datePublished')
+            rating=reviewsection.find('meta',itemprop='ratingValue')
+        
+            date_str=parse_to_substr('"datePublished">\n','\n',str(date))
+            rating_str=parse_to_substr('<meta content="','"',str(rating))
+            price_str=parse_to_substr('<span class="business-attribute price-range">','<',str(price))
+            #resname_str=parse_to_substr('<h1 class="biz-page-title embossed-text-white" itemprop="name">\n','\n',res_name)
+            date_str=remove_tabs(date_str)
+        
+                #print review
+                #print type(review)
+            if review_num<max_output:
+                #print "printing review number "+str(review_num)
            
-            review_str="Review ID: "
-            review_str+=(reviewID_str)
-            review_str+="\nPublished date: "
-            review_str+=(date_str)
-            review_str+="\nStars given: "
-            review_str+=(rating_str)
-            review_str+="\nRestaurant name: "
-            review_str+=res_name
-            review_str+="\nPrice range: "
-            review_str+=price_str
-            review_str+="\nReview text: "
-            review_str+=reviewStr
-            print "printing review number "+str(review_num)
-            f = open("../reviews/review#%i.txt" %review_num,'w')
-            f.write(review_str)
-            f.close()
-            review_num+=1
+                review_str="Review ID: "
+                review_str+=(reviewID_str)
+                review_str+="\nPublished date: "
+                review_str+=(date_str)
+                review_str+="\nStars given: "
+                review_str+=(rating_str)
+                review_str+="\nRestaurant name: "
+                review_str+=res_name
+                review_str+="\nPrice range: "
+                review_str+=price_str
+                review_str+="\nReview text: "
+                review_str+=reviewStr
+                print "printing review number "+str(review_num)
+                f = open("../reviews/review#%i.txt" %review_num,'w')
+                f.write(review_str)
+                f.close()
+                review_num+=1
+            else:
+                proceed=False
+                #break
+                return proceed, outlinks, reviewlist
+        
         else:
-            proceed=False
+            print "duplicate review found!"
             
-    return proceed, outlinks
+    return proceed, outlinks, reviewlist
 
 # http://stackoverflow.com/questions/9662346/python-code-to-remove-html-tags-from-a-string
 def remove_tags(text):
     return TAG_RE.sub('', text)  
+    
+def remove_tabs(text):
+    return tab_re.sub('',text)
 
 def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
 
     tocrawl = [seed]
     crawled = []
+    reviewIDList = []
     #graph = {}  # <url>: [list of pages it links to]
     #index = {}  # keyword: [url]
     nextdepth=[]
@@ -143,23 +154,15 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
             outlinks= []
             content = get_page(page)
             
-            proceed,outlinks=process_html(outlinks,content,proceed)    
-            
-            
-            #add_page_to_index(index, page, content)
-            #outlinks = get_all_links(content)
-            #graph[page] = outlinks
+            proceed,outlinks,reviewIDList=process_html(outlinks,reviewIDList,content,proceed)    
+
             union(nextdepth, outlinks)
             crawled.append(page)
             #print "page crawled: "+page
         if not tocrawl:
             tocrawl,nextdepth=nextdepth,[]
             depth+=1
-            
-    #return index, graph
 
-
- #returns a string with 
 def main():
     
     base_url='http://www.yelp.com'
@@ -170,10 +173,8 @@ def main():
     seed_query=base_url+'/search?find_desc='+term+'&find_loc='+place+'&ns=1'
     #seed_query='http://www.yelp.com/biz/houston-panini-and-provisions-houston'
     #print seed_query
-    #index, graph = crawl_web(seed_query,MAX_PAGES,MAX_DEPTH)
     crawl_web(seed_query,MAX_PAGES,MAX_DEPTH)
-    #ranks = compute_ranks(graph)
-    #print search(index, ranks, 'Japanese')
+
 
 if __name__ == "__main__":
     main()

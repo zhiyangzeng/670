@@ -2,12 +2,12 @@
 
 MAX_PAGES=5
 MAX_DEPTH=5
-max_output=3
+max_output=10
 review_num=1
 
 
 from bs4 import BeautifulSoup, Tag
-import time
+#import time
 import re
 TAG_RE = re.compile(r'<[^>]+>')
 
@@ -51,7 +51,7 @@ def process_html(outlinks, content,proceed):
         
     #price=parsed_html.find('meta', itemprop="priceRange")
     price=parsed_html.find("span", { "class" : "business-attribute price-range" })
-    print price
+    #print price
     
         
     for link in parsed_html.find_all('a'): #finds all the urls and push into queue
@@ -60,12 +60,18 @@ def process_html(outlinks, content,proceed):
             if '/biz/' in url:
                 if url.find('/',0,1) != -1:
                     url="http://www.yelp.com"+url
-                if url.find('//www.',0,len(url)) != -1 and url.find('.com/',0,len(url)) !=-1 :                                            
+                if url.find('//www.',0,len(url)) != -1 and url.find('.com/',0,len(url)) !=-1 :    
+                    index=url.find('?hrid')
+                    if index!=-1:
+                        url=url[:index+1]
                     outlinks.append(url)
                 #print url
     for nextBizPage in parsed_html.find_all('link', rel="next"): #parse nextpg here and stores
-        print nextBizPage
+        #print nextBizPage
         url= nextBizPage.get('href')
+        index=url.find('?hrid')
+        if index!=-1:
+            url=url[:index+1]
         outlinks.append(url) 
     
     for reviewsection in parsed_html.find_all('div', itemprop="review"):
@@ -79,23 +85,19 @@ def process_html(outlinks, content,proceed):
         
         
         reviewID=reviewsection.find("div", { "class" : "rateReview voting-feedback" })
-        #print rating
-        print date
-        #print "price: "+str(pricerange)
+        #print date
         reviewID_str=parse_to_substr('data-review-id="','"',str(reviewID))
         date_str=parse_to_substr('"datePublished">\n','\n',str(date))
         rating_str=parse_to_substr('<meta content="','"',str(rating))
         price_str=parse_to_substr('<span class="business-attribute price-range">','<',str(price))
         #resname_str=parse_to_substr('<h1 class="biz-page-title embossed-text-white" itemprop="name">\n','\n',res_name)
-        #print resname_str
         
-        #print restaurant
             #print review
             #print type(review)
         if review_num<max_output:
             #print "printing review number "+str(review_num)
-            review_str=reviewStr
-            review_str+="\nReview ID: "
+           
+            review_str="Review ID: "
             review_str+=(reviewID_str)
             review_str+="\nPublished date: "
             review_str+=(date_str)
@@ -105,6 +107,8 @@ def process_html(outlinks, content,proceed):
             review_str+=res_name
             review_str+="\nPrice range: "
             review_str+=price_str
+            review_str+="\nReview text: "
+            review_str+=reviewStr
             print "printing review number "+str(review_num)
             f = open("../reviews/review#%i.txt" %review_num,'w')
             f.write(review_str)
@@ -147,7 +151,7 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
             #graph[page] = outlinks
             union(nextdepth, outlinks)
             crawled.append(page)
-            print "page crawled: "+page
+            #print "page crawled: "+page
         if not tocrawl:
             tocrawl,nextdepth=nextdepth,[]
             depth+=1
@@ -165,7 +169,7 @@ def main():
     place=location.replace(',','%2C').replace(' ','+')
     seed_query=base_url+'/search?find_desc='+term+'&find_loc='+place+'&ns=1'
     #seed_query='http://www.yelp.com/biz/houston-panini-and-provisions-houston'
-    print seed_query
+    #print seed_query
     #index, graph = crawl_web(seed_query,MAX_PAGES,MAX_DEPTH)
     crawl_web(seed_query,MAX_PAGES,MAX_DEPTH)
     #ranks = compute_ranks(graph)

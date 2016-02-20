@@ -6,6 +6,8 @@ MAX_DEPTH=10
 
 from bs4 import BeautifulSoup
 import time
+import re
+TAG_RE = re.compile(r'<[^>]+>')
 
 def time_execution(code):
     start=time.clock()
@@ -45,16 +47,23 @@ def process_html(outlinks, content):
         outlinks.append(url) 
         
     for review in parsed_html.find_all('p', itemprop='description'):#finds reviews
+        # use regex to remove tags
+        reviewStr = remove_tags(str(review))
+        print reviewStr
+
         #print review
         #print type(review)
         if review_num<max_output:
-            f = open("/Users/zhiyangzeng/Desktop/670/review#%i.txt" %review_num,'w')
-            f.write(str(review))
+            f = open("/Users/muqingzhou/Documents/CSCE670/dataset/review#%i.txt" %review_num,'w')
+            f.write(reviewStr)
             f.close()
             review_num+=1
             
     return outlinks
-     
+
+# http://stackoverflow.com/questions/9662346/python-code-to-remove-html-tags-from-a-string
+def remove_tags(text):
+    return TAG_RE.sub('', text)  
 
 def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
     tocrawl = [seed]

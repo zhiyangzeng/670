@@ -1,0 +1,25 @@
+<p itemprop="description" lang="en">Delicious lunch at Huynh! The service was quick and friendly, and the food was delicious.<br><br>To start, we had the BÁNH T THIT NNG (#5), which are spring rolls with a thicker rice paper wrap--it's basically as if the spring roll has two layers of the normal spring roll. The pork inside and the dipping sauce were both hot, and it was delicious.<br><br>The GI VT (#8) duck salad is listed as an appetizer but is really the perfect size for a lunch salad for one person. It's a delicious salad of chopped cabbage and basil, topped with shredded duck and tossed in a light dressing.  My favorite of the meal.<br><br>We had the MÌ QUNG (#94) soup with just the pork (no seafood), and it was nice and spicy, though not too spicy.  The noodles that come with it are much thicker than vermicelli noodles.  Great spicy soup dish.</br></br></br></br></br></br></p>
+<div class="rateReview voting-feedback" data-review-id="Sf-E83dvVJjSbCqm35zIuQ">
+<p class="voting-intro voting-prompt">
+        Was this review …?
+    </p>
+<ul class="voting-buttons" data-csrf-token="751b25253c73770bcf07c7e5f163ecc8211f9bc201cca1dca02c02747fac5e15">
+<li class="vote-item inline-block">
+<a class="ybtn ybtn-small useful" href="javascript:;" rel="useful"><span class="i-wrap ig-wrap-common i-ufc-useful-common-wrap button-content"><i class="i ig-common i-ufc-useful-common"></i> <span class="vote-type">Useful</span>
+<span class="count">1</span></span></a>
+</li>
+<li class="vote-item inline-block">
+<a class="ybtn ybtn-small funny" href="javascript:;" rel="funny"><span class="i-wrap ig-wrap-common i-ufc-funny-common-wrap button-content"><i class="i ig-common i-ufc-funny-common"></i> <span class="vote-type">Funny</span>
+<span class="count">1</span></span></a>
+</li>
+<li class="vote-item inline-block">
+<a class="ybtn ybtn-small cool" href="javascript:;" rel="cool"><span class="i-wrap ig-wrap-common i-ufc-cool-common-wrap button-content"><i class="i ig-common i-ufc-cool-common"></i> <span class="vote-type">Cool</span>
+<span class="count">1</span></span></a>
+</li>
+</ul>
+</div>
+<meta content="2016-01-18" itemprop="datePublished">
+        1/18/2016
+    </meta>
+<meta content="4.0" itemprop="ratingValue">
+</meta>

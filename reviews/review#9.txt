@@ -1,0 +1,25 @@
+<p itemprop="description" lang="en">450+ reviews &amp; 4 stars for a Vietnamese restaurant? I was skeptical at first thinking the place would be more Americanized to cater to the downtown crowd. After my visit, this is not entirely true. <br><br>#5 BÁNH UOT THIT NUONG - not your traditional banh uot. The steamed rice batter is wrapped around the pork and lettuce - somewhat similar to banh cuon but with thicker rice batter. "Special sauce" was a little weird consistency and color. I would rather have it with nuoc mam (fish sauce) next time. <br><br>#94 MÌ QUANG - Really good! The broth is not too salty, and there's just the right amount of meat, veggies, and crackers. Don't forget to squeeze the lime first before indulging! TIP: This soup is not your typical pho bowl because there's very little broth so be sure you understand what you're ordering. <br><br>#82 ÐU HU XÀO LĂN - basically fried tofu, thick, creamy coconut curry sauce with clear glass noodles. I found it pretty interesting because they served it with rice but there was already noodles in the dish. I loved the flavors but wished the tofu soaked up more of the curry flavor. Again, another dish you should review before ordering.<br><br>#D3 FLAN - flan + Vietnamese coffee? The sweetness of the flan with the strong, bitter coffee makes the perfect pair. I devoured every single bit of it. Next time I could opt for no shaved ice though :) <br><br>4 stars for the food - 1 star for the service. I know what kind of service to expect at Vietnamese restaurants, but Huynh is not your typical Bellaire joint so the waiters shouldn't treat their customers like a typical Bellaire joint. <br><br>Other than the service, I would return solely for their food.</br></br></br></br></br></br></br></br></br></br></br></br></p>
+<div class="rateReview voting-feedback" data-review-id="c2Hv17c4MKa0Lt4UE1-U0Q">
+<p class="voting-intro voting-prompt">
+        Was this review …?
+    </p>
+<ul class="voting-buttons" data-csrf-token="751b25253c73770bcf07c7e5f163ecc8211f9bc201cca1dca02c02747fac5e15">
+<li class="vote-item inline-block">
+<a class="ybtn ybtn-small useful" href="javascript:;" rel="useful"><span class="i-wrap ig-wrap-common i-ufc-useful-common-wrap button-content"><i class="i ig-common i-ufc-useful-common"></i> <span class="vote-type">Useful</span>
+<span class="count"></span></span></a>
+</li>
+<li class="vote-item inline-block">
+<a class="ybtn ybtn-small funny" href="javascript:;" rel="funny"><span class="i-wrap ig-wrap-common i-ufc-funny-common-wrap button-content"><i class="i ig-common i-ufc-funny-common"></i> <span class="vote-type">Funny</span>
+<span class="count"></span></span></a>
+</li>
+<li class="vote-item inline-block">
+<a class="ybtn ybtn-small cool" href="javascript:;" rel="cool"><span class="i-wrap ig-wrap-common i-ufc-cool-common-wrap button-content"><i class="i ig-common i-ufc-cool-common"></i> <span class="vote-type">Cool</span>
+<span class="count"></span></span></a>
+</li>
+</ul>
+</div>
+<meta content="2016-01-27" itemprop="datePublished">
+        1/27/2016
+    </meta>
+<meta content="3.0" itemprop="ratingValue">
+</meta>

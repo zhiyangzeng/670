@@ -1,19 +1,20 @@
 
 
-MAX_PAGES=30
-MAX_DEPTH=15
-max_output=30
+MAX_PAGES=10
+MAX_DEPTH=5
+max_output=10
 review_num=1
 
 
 from bs4 import BeautifulSoup
 import time
-
+'''
 def time_execution(code):
     start=time.clock()
     result=eval(code)
     run_time=time.clock-start
     return result, run_time
+'''    
             
 #opens web containing all info
 def get_page(url):
@@ -33,7 +34,7 @@ def process_html(outlinks, content):
     global review_num
     parsed_html=BeautifulSoup(content,"html.parser")
     
-    for link in parsed_html.find_all('a'):
+    for link in parsed_html.find_all('a'): #finds all the urls and push into queue
         url= link.get('href') #parse relative here and stores
         if url != None :
             if '/biz/' in url:
@@ -47,18 +48,44 @@ def process_html(outlinks, content):
         url= nextBizPage.get('href')
         outlinks.append(url) 
         
+    for reviewsection in parsed_html.find_all('div', itemprop="review"):
+        review = reviewsection.find('p', itemprop='description')#finds reviews
+        date=reviewsection.find('meta', itemprop='datePublished')
+        rating=reviewsection.find('meta',itemprop='ratingValue')
+        reviewID=reviewsection.find("div", { "class" : "rateReview voting-feedback" })
+        print rating
+        print date
+        print reviewID
+            #print review
+            #print type(review)
+        if review_num<max_output:
+            #print "printing review number "+str(review_num)
+            f = open("reviews/review#%i.txt" %review_num,'w')
+            review_str=str(review)
+            review_str+="\n"
+            review_str+=(str(reviewID))
+            review_str+="\n"
+            review_str+=(str(date))
+            review_str+="\n"
+            review_str+=(str(rating))
+            #review_str.append
+            f.write(review_str)
+            f.close()
+            review_num+=1
+    return outlinks
+                
+'''    
     for review in parsed_html.find_all('p', itemprop='description'):#finds reviews
         #print review
         #print type(review)
         if review_num<max_output:
 
-            print "printing review number "+str(review_num)
-            f = open("/Users/zhiyangzeng/Desktop/670/review#%i.txt" %review_num,'w')
+            #print "printing review number "+str(review_num)
+            f = open("reviews/review#%i.txt" %review_num,'w')
             f.write(str(review))
             f.close()
             review_num+=1
-            
-    return outlinks
+'''
      
 
 def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks

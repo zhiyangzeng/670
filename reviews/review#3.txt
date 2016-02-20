@@ -1,0 +1,25 @@
+<p itemprop="description" lang="en">such a refreshing restaurant to have refreshing vietnamese food! great ambiance, friendly and helpful service, and extensive menu (but no bo kho, QQ). only downside is parking, but where in houston is that not the case?<br>we ordered banh uot, banh cuon with thit nuong filling, the fried egg rolls, pho and bun thit nuong. we might have overloaded a bit on the thit nuong but that didn't stop us from eating everything. banh cuon was soft and flavorful without being slimy, and the bun was just as delicious as most places, but presented much more beautifully. banh uot was a little on the smaller side but still yummy. i would skip the fried egg rolls next time, not because they were bad but because they were a little greasy and i could definitely eat something else in place of them!<br>still fairly priced, even for vietnamese food, considering the service and the dining atmosphere. can't wait to come back again!</br></br></p>
+<div class="rateReview voting-feedback" data-review-id="E7KAQdYAI59qfpwZFRaqww">
+<p class="voting-intro voting-prompt">
+        Was this review …?
+    </p>
+<ul class="voting-buttons" data-csrf-token="d27f199cf1ead7cbc9f3c9c6c2e8b5f6af1dc94973dd5627aaf85a92de78af4b">
+<li class="vote-item inline-block">
+<a class="ybtn ybtn-small useful" href="javascript:;" rel="useful"><span class="i-wrap ig-wrap-common i-ufc-useful-common-wrap button-content"><i class="i ig-common i-ufc-useful-common"></i> <span class="vote-type">Useful</span>
+<span class="count"></span></span></a>
+</li>
+<li class="vote-item inline-block">
+<a class="ybtn ybtn-small funny" href="javascript:;" rel="funny"><span class="i-wrap ig-wrap-common i-ufc-funny-common-wrap button-content"><i class="i ig-common i-ufc-funny-common"></i> <span class="vote-type">Funny</span>
+<span class="count"></span></span></a>
+</li>
+<li class="vote-item inline-block">
+<a class="ybtn ybtn-small cool" href="javascript:;" rel="cool"><span class="i-wrap ig-wrap-common i-ufc-cool-common-wrap button-content"><i class="i ig-common i-ufc-cool-common"></i> <span class="vote-type">Cool</span>
+<span class="count"></span></span></a>
+</li>
+</ul>
+</div>
+<meta content="2016-02-16" itemprop="datePublished">
+        2/16/2016
+    </meta>
+<meta content="5.0" itemprop="ratingValue">
+</meta>

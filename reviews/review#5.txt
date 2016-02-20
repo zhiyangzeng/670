@@ -1,0 +1,25 @@
+<p itemprop="description" lang="en">Love this place to death.<br>Food are well-made, nice employees. <br>One most important thing: BOYB which is great for having a small party with friends.<br>Parking is always bad at weekends, and the lot opposite is a hit or miss. Customers are able to park there if there's no games/shows at the nearby stadium going on.</br></br></br></p>
+<div class="rateReview voting-feedback" data-review-id="30i4MUx_dzCX0MiKSurJzA">
+<p class="voting-intro voting-prompt">
+        Was this review …?
+    </p>
+<ul class="voting-buttons" data-csrf-token="d27f199cf1ead7cbc9f3c9c6c2e8b5f6af1dc94973dd5627aaf85a92de78af4b">
+<li class="vote-item inline-block">
+<a class="ybtn ybtn-small useful" href="javascript:;" rel="useful"><span class="i-wrap ig-wrap-common i-ufc-useful-common-wrap button-content"><i class="i ig-common i-ufc-useful-common"></i> <span class="vote-type">Useful</span>
+<span class="count"></span></span></a>
+</li>
+<li class="vote-item inline-block">
+<a class="ybtn ybtn-small funny" href="javascript:;" rel="funny"><span class="i-wrap ig-wrap-common i-ufc-funny-common-wrap button-content"><i class="i ig-common i-ufc-funny-common"></i> <span class="vote-type">Funny</span>
+<span class="count"></span></span></a>
+</li>
+<li class="vote-item inline-block">
+<a class="ybtn ybtn-small cool" href="javascript:;" rel="cool"><span class="i-wrap ig-wrap-common i-ufc-cool-common-wrap button-content"><i class="i ig-common i-ufc-cool-common"></i> <span class="vote-type">Cool</span>
+<span class="count"></span></span></a>
+</li>
+</ul>
+</div>
+<meta content="2016-02-06" itemprop="datePublished">
+        2/6/2016
+    </meta>
+<meta content="5.0" itemprop="ratingValue">
+</meta>

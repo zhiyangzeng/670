@@ -1,14 +1,8 @@
 
 
-<<<<<<< HEAD
 MAX_PAGES=10
 MAX_DEPTH=5
 max_output=10
-=======
-MAX_PAGES=500
-MAX_DEPTH=30
-max_output=500
->>>>>>> 3a8361b5527a884d211b40c4f1a51bb5d1e89559
 review_num=1
 
 
@@ -53,15 +47,20 @@ def process_html(outlinks, content,proceed):
         print nextBizPage
         url= nextBizPage.get('href')
         outlinks.append(url) 
+    #restaurant=parsed_html.find('meta', {'property':'og:title'})
         
     for reviewsection in parsed_html.find_all('div', itemprop="review"):
         review = reviewsection.find('p', itemprop='description')#finds reviews
         date=reviewsection.find('meta', itemprop='datePublished')
         rating=reviewsection.find('meta',itemprop='ratingValue')
+        price=reviewsection.find('meta', itemprop="priceRange")
+        
         reviewID=reviewsection.find("div", { "class" : "rateReview voting-feedback" })
         print rating
         print date
         print reviewID
+        print price
+        #print restaurant
             #print review
             #print type(review)
         if review_num<max_output:
@@ -78,20 +77,7 @@ def process_html(outlinks, content,proceed):
             f.write(review_str)
             f.close()
             review_num+=1
-    return outlinks
                 
-'''    
-    for review in parsed_html.find_all('p', itemprop='description'):#finds reviews
-        #print review
-        #print type(review)
-        if review_num<max_output:
-
-            #print "printing review number "+str(review_num)
-            f = open("reviews/review#%i.txt" %review_num,'w')
-            f.write(str(review))
-            f.close()
-            review_num+=1
-'''
 
             print "printing review number "+str(review_num)
             f = open("Reviews/review#%i.txt" %review_num,'w')
@@ -102,6 +88,7 @@ def process_html(outlinks, content,proceed):
             proceed=False
             
     return proceed, outlinks
+ 
      
 
 def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks

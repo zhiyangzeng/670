@@ -52,20 +52,20 @@ def process_html(outlinks, content,proceed):
     for review in parsed_html.find_all('p', itemprop='description'):#finds reviews
         # use regex to remove tags
         reviewStr = remove_tags(str(review))
-        print reviewStr
+        #print reviewStr
 
         #print review
         #print type(review)
         if review_num<max_output:
             print "printing review number "+str(review_num)
             f = open("Reviews/review#%i.txt" %review_num,'w')
-            f.write(str(review))
+            f.write(reviewStr)
             f.close()
             review_num+=1
         else:
             proceed=False
             
-return proceed, outlinks
+    return proceed, outlinks
 
 # http://stackoverflow.com/questions/9662346/python-code-to-remove-html-tags-from-a-string
 def remove_tags(text):

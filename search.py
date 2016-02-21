@@ -1,9 +1,11 @@
 
 
-MAX_PAGES=100
-MAX_DEPTH=50
-max_output=50
+MAX_PAGES=2000
+MAX_DEPTH=150
+max_output=100
 review_num=1
+city=''
+state=''
 
 
 from bs4 import BeautifulSoup, Tag
@@ -43,8 +45,12 @@ def parse_to_substr (needle, endneedle, haystack):
 def process_html(outlinks, reviewlist,content,proceed):
     global max_output  #100k
     global review_num
+    global city
+    global state
+    global search
     parsed_html=BeautifulSoup(content,"html.parser")
     restaurant=parsed_html.find('meta', property='og:title')
+    filepath="../reviews/"
     #restaurant=parsed_html.find("h1", itemprop='name')
     if restaurant:
         res_name=restaurant.get('content')
@@ -113,7 +119,9 @@ def process_html(outlinks, reviewlist,content,proceed):
                 review_str+="\nReview text: "
                 review_str+=reviewStr
                 print "printing review number "+str(review_num)
-                f = open("../reviews/review#%i.txt" %review_num,'w')
+                filename=filepath+search+'-'+city+'-'+state+'#'+str(review_num)+'.txt'
+                #f = open("../reviews/review-%s-%s#%i.txt", %city,%state,%review_num,'w') -does not work
+                f=open(filename,'w')
                 f.write(review_str)
                 f.close()
                 review_num+=1
@@ -164,15 +172,19 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
             depth+=1
 
 def main():
-    
+    global city
+    global state
+    global search 
     if (len(sys.argv)<4):
         print 'usage: python search.py search_term city state'
         return
     base_url='http://www.yelp.com'
     search = sys.argv[1]
+    city=sys.argv[2]
+    state=sys.argv[3]
     #location='Houston, TX'
     term=search.replace(' ', '+')
-    location=sys.argv[2]+'%2C+'+sys.argv[3]
+    location=city+'%2C+'+state
     #place=location.replace(',','%2C').replace(' ','+')
     seed_query=base_url+'/search?find_desc='+term+'&find_loc='+location+'&ns=1'
     #seed_query='http://www.yelp.com/biz/houston-panini-and-provisions-houston'

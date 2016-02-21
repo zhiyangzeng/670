@@ -2,13 +2,14 @@
 
 MAX_PAGES=100
 MAX_DEPTH=50
-max_output=100
+max_output=50
 review_num=1
 
 
 from bs4 import BeautifulSoup, Tag
 #import time
 import re
+import sys
 TAG_RE = re.compile(r'<[^>]+>')
 tab_re=re.compile(r'[ \t]')
 
@@ -81,7 +82,7 @@ def process_html(outlinks, reviewlist,content,proceed):
         reviewID_str=parse_to_substr('data-review-id="','"',str(reviewID))
         # use regex to remove tags
         if reviewID_str not in reviewlist:  #avoid duplication
-            reviewlist.append(reviewID_str)
+            reviewlist.add(reviewID_str)
             review = reviewsection.find('p', itemprop='description')#finds reviews
             reviewStr = remove_tags(str(review))
         
@@ -118,11 +119,10 @@ def process_html(outlinks, reviewlist,content,proceed):
                 review_num+=1
             else:
                 proceed=False
-                #break
                 return proceed, outlinks, reviewlist
         
-        else:
-            print "duplicate review found!"
+        #else:
+            #print "duplicate review found!"
             
     return proceed, outlinks, reviewlist
 
@@ -136,8 +136,8 @@ def remove_tabs(text):
 def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
 
     tocrawl = [seed]
-    crawled = []
-    reviewIDList = []
+    crawled = set([])
+    reviewIDList = set([])
     #graph = {}  # <url>: [list of pages it links to]
     #index = {}  # keyword: [url]
     nextdepth=[]
@@ -157,7 +157,7 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
             proceed,outlinks,reviewIDList=process_html(outlinks,reviewIDList,content,proceed)    
 
             union(nextdepth, outlinks)
-            crawled.append(page)
+            crawled.add(page)
             #print "page crawled: "+page
         if not tocrawl:
             tocrawl,nextdepth=nextdepth,[]
@@ -165,14 +165,18 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
 
 def main():
     
+    if (len(sys.argv)<4):
+        print 'usage: python search.py search_term city state'
+        return
     base_url='http://www.yelp.com'
-    search = 'bbq'
-    location='Houston, TX'
+    search = sys.argv[1]
+    #location='Houston, TX'
     term=search.replace(' ', '+')
-    place=location.replace(',','%2C').replace(' ','+')
-    seed_query=base_url+'/search?find_desc='+term+'&find_loc='+place+'&ns=1'
+    location=sys.argv[2]+'%2C+'+sys.argv[3]
+    #place=location.replace(',','%2C').replace(' ','+')
+    seed_query=base_url+'/search?find_desc='+term+'&find_loc='+location+'&ns=1'
     #seed_query='http://www.yelp.com/biz/houston-panini-and-provisions-houston'
-    #print seed_query
+    print seed_query
     crawl_web(seed_query,MAX_PAGES,MAX_DEPTH)
 
 

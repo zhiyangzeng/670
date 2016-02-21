@@ -42,7 +42,8 @@ def parse_to_substr (needle, endneedle, haystack):
     end_index=haystack.find(endneedle,start_index+1)
     return haystack[start_index:end_index]
 
-def process_html(review_num,outlinks, reviewlist,content,proceed):
+def process_html(outlinks, reviewlist,content,proceed):
+    global review_num
     global max_output  #100k
     global city
     global state
@@ -141,6 +142,7 @@ def remove_tabs(text):
     return tab_re.sub('',text)
 
 def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
+    global review_num
     review_num=1
     tocrawl = [seed]
     crawled = set([])
@@ -161,7 +163,7 @@ def crawl_web(seed,maxpage,maxdepth): # returns index, graph of inlinks
             outlinks= []
             content = get_page(page)
             
-            proceed,outlinks,reviewIDList=process_html(review_num,outlinks,reviewIDList,content,proceed)    
+            proceed,outlinks,reviewIDList=process_html(outlinks,reviewIDList,content,proceed)    
 
             union(nextdepth, outlinks)
             crawled.add(page)
